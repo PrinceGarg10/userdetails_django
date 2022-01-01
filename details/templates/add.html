@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <script>
+      if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href );
+  }
+  </script>
+    <div class="col-sm-12 ">
+        <h4 class = "text-center alert alert-info">Show Information</h4>
+        {% if inf %}
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">FIRST NAME</th>
+                <th scope="col">LAST NAME</th>
+                <th scope="col">USERNAME</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for inm in inf %}
+              <tr>
+                <th scope="row">{{inm.id}}</th>
+                <td>{{inm.name}}</td>
+                <td>{{inm.lastname}}</td>
+                <td>{{inm.username}}</td>
+                <td>{{inm.email}}</td>
+                <td><a href="{% url 'updatedata' inm.id %}" class="btn btn-warning">Show/Edit</a>
+                  <form action="{% url 'deletedata' inm.id %}" method="post" class="d-inline"> {% csrf_token %}
+                    <input type="submit" class = "btn btn-danger"value="Delete">
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+            <h4 class = "text-center alert alert-warning">No Records..!</h4>
+        {% endif %}
+    
+    </div>
+
+</div>
+
+{% endblock content %}
